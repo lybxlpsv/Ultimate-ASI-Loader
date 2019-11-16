@@ -195,6 +195,9 @@ void LoadOriginalLibrary()
     else if (iequals(szSelfName, L"dinput8.dll")) {
         dinput8.LoadOriginalLibrary(LoadLibraryW(szSystemPath));
     }
+	else if (iequals(szSelfName, L"dnsapi.dll")) {
+		dnsapi.LoadOriginalLibrary(LoadLibraryW(szSystemPath));
+	}
     else if (iequals(szSelfName, L"ddraw.dll")) {
         ddraw.LoadOriginalLibrary(LoadLibraryW(szSystemPath));
     }
@@ -301,6 +304,9 @@ void LoadOriginalLibrary()
     else if (iequals(szSelfName, L"version.dll")) {
         version.LoadOriginalLibrary(LoadLibraryW(szSystemPath));
     }
+	else if (iequals(szSelfName, L"dnsapi.dll")) {
+		dnsapi.LoadOriginalLibrary(LoadLibraryW(szSystemPath));
+	}
     else
     {
         MessageBox(0, TEXT("This library isn't supported. Try to rename it to dsound.dll, dinput8.dll, wininet.dll or version.dll."), TEXT("ASI Loader"), MB_ICONERROR);
@@ -349,7 +355,7 @@ void FindFiles(WIN32_FIND_DATAW* fd)
 {
     auto dir = GetCurrentDirectoryW();
 
-    HANDLE asiFile = FindFirstFileW(L"*.asi", fd);
+    HANDLE asiFile = FindFirstFileW(L"*.dva", fd);
     if (asiFile != INVALID_HANDLE_VALUE)
     {
         do {
@@ -358,9 +364,9 @@ void FindFiles(WIN32_FIND_DATAW* fd)
                 auto pos = wcslen(fd->cFileName);
 
                 if (fd->cFileName[pos - 4] == '.' &&
-                    (fd->cFileName[pos - 3] == 'a' || fd->cFileName[pos - 3] == 'A') &&
-                    (fd->cFileName[pos - 2] == 's' || fd->cFileName[pos - 2] == 'S') &&
-                    (fd->cFileName[pos - 1] == 'i' || fd->cFileName[pos - 1] == 'I'))
+                    (fd->cFileName[pos - 3] == 'd' || fd->cFileName[pos - 3] == 'D') &&
+                    (fd->cFileName[pos - 2] == 'v' || fd->cFileName[pos - 2] == 'V') &&
+                    (fd->cFileName[pos - 1] == 'a' || fd->cFileName[pos - 1] == 'A'))
                 {
                     auto path = dir + L'\\' + fd->cFileName;
 
